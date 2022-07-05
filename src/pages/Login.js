@@ -8,12 +8,13 @@ class Login extends React.Component {
       loginName: '',
       disabledButton: true,
       time: false,
-    }
+    };
   }
 
   validaBotao = () => {
     const { loginName } = this.state;
-    if (loginName.length >= 3) {
+    const valorLimite = 3;
+    if (loginName.length >= valorLimite) {
       this.setState({
         disabledButton: false,
       });
@@ -37,6 +38,7 @@ class Login extends React.Component {
 
   handleTime = () => {
     const { loginName } = this.state;
+    const tempo = 1000;
     createUser({ name: loginName });
     this.setState({
       time: true,
@@ -46,7 +48,7 @@ class Login extends React.Component {
       this.setState({
         time: false,
       });
-    }, 1000);
+    }, tempo);
   }
 
   render() {
@@ -55,25 +57,25 @@ class Login extends React.Component {
       <main>
         {
           time ? <h1>Carregando...</h1>
-          : 
-      <form data-testid="page-login">
-        <label htmlFor="login-name-input">
-          <input
-            type="text"
-            data-testid="login-name-input"
-            name="loginName"
-            value={ loginName }
-            onChange={ this.onInputChange }/>
-        </label>
-        <button
-          type="button"
-          data-testid="login-submit-button"
-          disabled={ disabledButton }
-          onClick={ this.handleTime }
-        >
-        Entrar
-        </button>
-      </form>
+            : <form data-testid="page-login">
+              <label htmlFor="login-name-input">
+                <input
+                  type="text"
+                  data-testid="login-name-input"
+                  name="loginName"
+                  value={ loginName }
+                  onChange={ this.onInputChange }
+                />
+              </label>
+              <button
+                type="button"
+                data-testid="login-submit-button"
+                disabled={ disabledButton }
+                onClick={ this.handleTime }
+              >
+                Entrar
+              </button>
+            </form>
         }
       </main>
     );
