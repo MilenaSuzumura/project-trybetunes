@@ -82,7 +82,9 @@ class Search extends React.Component {
                         <NavLink
                           to={ `/album/${collectionId}` }
                           data-testid={ `link-to-album-${collectionId}` }
-                        />
+                        >
+                          Escute o album
+                        </NavLink>
                       </div>
                     );
                   })
