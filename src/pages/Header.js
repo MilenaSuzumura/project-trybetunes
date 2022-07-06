@@ -1,6 +1,6 @@
 import React from 'react';
-import { getUser } from '../services/userAPI';
 import { NavLink } from 'react-router-dom';
+import { getUser } from '../services/userAPI';
 
 class Header extends React.Component {
   constructor() {
@@ -35,7 +35,9 @@ class Header extends React.Component {
             : (
               <div>
                 <NavLink to="/search" data-testid="link-to-search">Search</NavLink>
-                <NavLink to="/favorites" data-testid="link-to-favorites">Favorites</NavLink>
+                <NavLink to="/favorites" data-testid="link-to-favorites">
+                  Favorites
+                </NavLink>
                 <NavLink to="/profile" data-testid="link-to-profile">Profile</NavLink>
               </div>
             )

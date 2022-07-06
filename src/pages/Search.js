@@ -67,22 +67,21 @@ class Search extends React.Component {
         >
           Pesquisar
         </button>
-        
         {
           resultApi.length === 0 ? <h2>Nenhum álbum foi encontrado</h2>
             : (
               <div>
-                <h2>Resultado de álbuns de: { artista }</h2>
+                <h2>{ `Resultado de álbuns de: ${artista}` }</h2>
                 {
                   resultApi.map((album) => {
                     const { collectionName, artworkUrl100, collectionId } = album;
                     return (
                       <div key={ collectionId }>
                         <h4>{ collectionName }</h4>
-                        <img src={ artworkUrl100 } />
+                        <img src={ artworkUrl100 } alt={ collectionName } />
                         <NavLink
-                          to={ `/album/${ collectionId }` }
-                          data-testid={`link-to-album-${collectionId}`}
+                          to={ `/album/${collectionId}` }
+                          data-testid={ `link-to-album-${collectionId}` }
                         />
                       </div>
                     );
