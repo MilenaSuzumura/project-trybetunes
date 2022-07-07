@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import getMusics from '../services/musicsAPI';
+import MusicCard from './MusicCard';
 
 class Album extends React.Component {
   constructor() {
@@ -25,7 +26,6 @@ class Album extends React.Component {
       resultadoApi: resultado,
       carregamentoInicial: 1,
     });
-    console.log(resultado);
   }
 
   render() {
@@ -43,18 +43,13 @@ class Album extends React.Component {
         <h4 data-testid="artist-name">{ nomeArtista }</h4>
         {
           resultadoApi.map((musica) => {
-            const { trackName, previewUrl } = musica;
+            const { trackName, previewUrl, trackId } = musica;
             if (trackName !== undefined) {
-              return (
-                <div>
-                  <p>{ trackName }</p>
-                  <audio data-testid="audio-component" src={ `${previewUrl}` } controls>
-                    <track kind="captions" />
-                    O seu navegador não suporta o elemento
-                    <code>audio</code>
-                  </audio>
-                </div>
-              );
+              return (<MusicCard
+                trackName={ trackName }
+                previewUrl={ previewUrl }
+                trackId={ trackId }
+              />);
             }
             return '';
           })
