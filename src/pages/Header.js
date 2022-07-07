@@ -13,9 +13,10 @@ class Header extends React.Component {
   }
 
   carregamento = async () => {
-    const tempo = 1000;
+    const tempo = 100;
     this.setState({
       time: true,
+      carregamentoInicio: 1,
     });
     const pessoaUsuaria = await getUser();
     setTimeout(() => {
@@ -29,9 +30,6 @@ class Header extends React.Component {
   render() {
     const { time, usuario, carregamentoInicio } = this.state;
     if (carregamentoInicio === 0) {
-      this.setState({
-        carregamentoInicio: 1,
-      });
       this.carregamento();
     }
     return (
