@@ -44,11 +44,11 @@ class Login extends React.Component {
       time: true,
     });
     setTimeout(() => {
-      this.searchDirecionar(this.props);
       this.setState({
         time: false,
       });
     }, tempo);
+    this.searchDirecionar(this.props);
   }
 
   render() {
