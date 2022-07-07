@@ -8,32 +8,39 @@ class Header extends React.Component {
     this.state = {
       usuario: '',
       time: false,
+      carregamentoInicio: 0,
     };
   }
 
   carregamento = async () => {
-    const pessoaUsuaria = await getUser();
-    console.log(pessoaUsuaria);
+    const tempo = 1000;
     this.setState({
       time: true,
     });
+    const pessoaUsuaria = await getUser();
     setTimeout(() => {
       this.setState({
         time: false,
-        usuario: pessoaUsuaria,
+        usuario: Object.values(pessoaUsuaria)[0],
       });
-    }, pessoaUsuaria !== undefined);
+    }, tempo);
   };
 
   render() {
-    const { time, usuario } = this.state;
+    const { time, usuario, carregamentoInicio } = this.state;
+    if (carregamentoInicio === 0) {
+      this.setState({
+        carregamentoInicio: 1,
+      });
+      this.carregamento();
+    }
     return (
       <header data-testid="header-component">
-        <h1>{ usuario }</h1>
         {
           time ? <h1>Carregando...</h1>
             : (
               <div>
+                <h1 data-testid="header-user-name">{ usuario }</h1>
                 <NavLink to="/search" data-testid="link-to-search">Search</NavLink>
                 <NavLink to="/favorites" data-testid="link-to-favorites">
                   Favorites
