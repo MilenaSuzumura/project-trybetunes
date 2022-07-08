@@ -12,11 +12,8 @@ class MusicCard extends React.Component {
   }
 
   adicionarFavoritos = ({ target }) => {
-    const info = Object.values(target)[1];
+    addSong(Object.values(target)[1]);
     const { checked } = target;
-    const { trackId } = info;
-    console.log(checked);
-    addSong(trackId);
     const tempo = 1000;
     this.setState({
       carregando: true,
@@ -44,15 +41,16 @@ class MusicCard extends React.Component {
                   O seu navegador não suporta o elemento
                   <code>audio</code>
                 </audio>
-                <label htmlFor={ trackName }>
+                <label htmlFor={ `checkbox-music-${trackId}` } key={ trackName }>
                   Favorita
                   <input
                     type="checkbox"
                     data-testid={ `checkbox-music-${trackId}` }
+                    id={ `checkbox-music-${trackId}` }
                     name={ trackName }
-                    trackId={ trackId }
-                    value={ check }
+                    value={ `checkbox-music-${trackId}` }
                     onClick={ this.adicionarFavoritos }
+                    checked={ check }
                   />
                 </label>
               </div>
