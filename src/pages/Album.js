@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header';
 import getMusics from '../services/musicsAPI';
 import MusicCard from './MusicCard';
+import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 class Album extends React.Component {
   constructor() {
@@ -12,12 +13,14 @@ class Album extends React.Component {
       imagem: '',
       resultadoApi: [],
       carregamentoInicial: 0,
+      resultadoFavoritos: [],
     };
   }
 
   recebeInformacao = async ({ match }) => {
     const { id } = match.params;
     const resultado = await getMusics(id);
+    const musicasFavoritas = await getFavoriteSongs();
     const { collectionName, artistName, artworkUrl100 } = resultado[0];
     this.setState({
       tituloAlbum: collectionName,
@@ -25,6 +28,7 @@ class Album extends React.Component {
       imagem: artworkUrl100,
       resultadoApi: resultado,
       carregamentoInicial: 1,
+      resultadoFavoritos: musicasFavoritas,
     });
   }
 
@@ -33,7 +37,8 @@ class Album extends React.Component {
       nomeArtista,
       tituloAlbum,
       imagem,
-      resultadoApi } = this.state;
+      resultadoApi,
+      resultadoFavoritos } = this.state;
     if (carregamentoInicial === 0) this.recebeInformacao(this.props);
     return (
       <div data-testid="page-album">
@@ -44,11 +49,17 @@ class Album extends React.Component {
         {
           resultadoApi.map((musica) => {
             const { trackName, previewUrl, trackId } = musica;
+            const favorita = resultadoFavoritos
+              .filter((favorito) => typeof favorito === 'object')
+              .filter((music) => Object.keys(music).filter((keys) => keys === 'checked'))
+              .filter((musicaIgual) => musicaIgual.name === trackName);
+            const check = favorita.length > 0;
             if (trackName !== undefined) {
               return (<MusicCard
                 trackName={ trackName }
-                previewUrl={ previewUrl }
+                previewUrl={ `${previewUrl}` }
                 trackId={ trackId }
+                checkExiste={ check }
               />);
             }
             return '';

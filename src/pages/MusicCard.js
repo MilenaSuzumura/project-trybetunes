@@ -13,17 +13,28 @@ class MusicCard extends React.Component {
 
   adicionarFavoritos = ({ target }) => {
     addSong(Object.values(target)[1]);
-    const { checked } = target;
+    const { checked, trackId } = target;
     const tempo = 1000;
     this.setState({
       carregando: true,
       check: checked,
     });
     setTimeout(() => {
+      localStorage.setItem(`${trackId}`, trackId);
       this.setState({
         carregando: false,
       });
     }, tempo);
+  }
+
+  componentDidMount = () => {
+    const { trackId } = this.props;
+    const item = localStorage.getItem(`${trackId}`);
+    if (item) {
+      this.setState({
+        check: true,
+      });
+    }
   }
 
   render() {
@@ -49,6 +60,8 @@ class MusicCard extends React.Component {
                     id={ `checkbox-music-${trackId}` }
                     name={ trackName }
                     value={ `checkbox-music-${trackId}` }
+                    trackId={ trackId }
+                    previewUrl={ `${previewUrl}` }
                     onClick={ this.adicionarFavoritos }
                     checked={ check }
                   />
